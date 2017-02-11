@@ -24,9 +24,9 @@ Provisions the containers.
 
 Stops the containers, gets the latest images from registry and rebuilds the containers.
 
-> dockercontrol ssh
+> dockercontrol ssh containername
 
-Get bash-prompt inside the specified container.
+Get a bash-prompt inside the specified container, use the containername that is specified in the docker-compose file.
 
 > dockercontrol status
 
