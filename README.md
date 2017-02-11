@@ -22,7 +22,7 @@ Provisions the containers.
 
 > dockercontrol rebuild
 
-Stops the containers, gets the latest images and rebuilds them.
+Stops the containers, gets the latest images from registry and rebuilds the containers.
 
 > dockercontrol ssh
 
@@ -30,4 +30,4 @@ Get bash-prompt inside the specified container.
 
 > dockercontrol status
 
-Gets the process output of docker containers.
+Gets the process output of the docker containers, if in the same folder as docker-compose we'll try to get only theese containers, otherwise we will get all running containers.
