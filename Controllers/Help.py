@@ -18,6 +18,6 @@ class Help:
         print color_green + 'rebuild'
         print color_gray + ' Stops the containers, gets the latest images and rebuilds them.'
         print color_green + 'ssh'
-        print color_gray + ' Get bash-prompt inside the specified container.'
+        print color_gray + ' Get a bash-prompt inside the specified container.'
         print color_green + 'status'
         print color_gray +' Gets the process output of docker containers.'
