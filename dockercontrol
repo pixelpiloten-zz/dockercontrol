@@ -18,7 +18,6 @@ app_name = os.path.basename(current_path)
 os.chdir(current_path)
 
 if len (sys.argv) > 1:
-    command = sys.argv[1]
     if sys.argv[1] == 'up':
         Up.run()
     elif sys.argv[1] == 'down':
