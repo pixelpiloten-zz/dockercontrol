@@ -1,23 +1,25 @@
 #!/usr/bin/python
 
-import os
-import sys
+from Controllers.Configuration import *
+from Commands.Up import *
+from Commands.Down import *
+from Commands.Provision import *
+from Commands.Rebuild import *
+from Commands.Ssh import *
+from Commands.Status import *
+from Commands.Help import *
+from Commands.Info import *
 
-from Controllers.Up import Up
-from Controllers.Down import Down
-from Controllers.Provision import Provision
-from Controllers.Rebuild import Rebuild
-from Controllers.Ssh import Ssh
-from Controllers.Status import Status
-from Controllers.Help import Help
+# Creates the Configuration object.
+Configuration = Configuration()
 
-current_path = os.path.abspath(os.getcwd())
-app_name = os.path.basename(current_path)
-
-# Change dir to path where command is run
-os.chdir(current_path)
+current_path = Configuration.currentPath()
+app_name = Configuration.appName()
 
 if len (sys.argv) > 1:
+    # Change dir to path where command is run
+    os.chdir(current_path)
+
     if sys.argv[1] == 'up':
         Up.run()
     elif sys.argv[1] == 'down':
@@ -30,6 +32,11 @@ if len (sys.argv) > 1:
         Ssh.run(app_name)
     elif sys.argv[1] == 'status':
         Status.run(app_name)
+    elif sys.argv[1] == 'info':
+        if len(sys.argv) > 2:
+            Info().getSingleContainerInfo(app_name, sys.argv[2])
+        else:
+            Info().getAllContainersInfo(app_name)
     elif sys.argv[1] == 'help':
         Help.run()
     else:
