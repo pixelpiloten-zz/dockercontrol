@@ -31,3 +31,7 @@ Get a bash-prompt inside the specified container, use the containername that is 
 > dockercontrol status
 
 Gets the process output of the docker containers, if in the same folder as docker-compose we'll try to get only theese containers, otherwise we will get all running containers.
+
+> dockercontrol info
+
+Gets a short summary about the runing containers in the docker-composer-file, if name of container is provided as a second argument info about only that running container is printed.
