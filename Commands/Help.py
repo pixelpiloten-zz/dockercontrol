@@ -1,9 +1,12 @@
 #!/usr/bin/python
 
+from Commands.Application import *
+
 class Help:
     @classmethod
 
     def run(self):
+        applications = Application().getApplications()
         color_green = '\033[92m'
         color_gray = '\033[37m'
         print ''
@@ -19,3 +22,7 @@ class Help:
         print color_gray + ' Get a bash-prompt inside the specified container.'
         print color_green + 'status'
         print color_gray +' Gets the process output of docker containers.'
+        if(applications):
+            for key, value in applications.items():
+                print color_green + key +' (custom command)'
+                print color_gray + ' '+ value['description']

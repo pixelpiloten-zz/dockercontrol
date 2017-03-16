@@ -5,12 +5,12 @@ import subprocess
 class Status:
     @classmethod
 
-    def run(self, app_name):
+    def run(self, environment_namespace):
         container_details = subprocess.check_output(['docker', 'ps'])
         app_containers_output = ""
         global_containers_output = ""
         for item in container_details.splitlines():
-            if app_name in item:
+            if environment_namespace in item:
                 app_containers_output = item +"\n"+ app_containers_output
 
         if not app_containers_output:

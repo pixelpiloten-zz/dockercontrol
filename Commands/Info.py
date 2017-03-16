@@ -7,18 +7,18 @@ import subprocess
 class Info:
     @classmethod
 
-    def getSingleContainerInfo(self, app_name, container_name):
-        Info().getContainerInfoByName(app_name, container_name)
+    def getSingleContainerInfo(self, environment_namespace, container_name):
+        Info().getContainerInfoByName(environment_namespace, container_name)
 
-    def getAllContainersInfo(self, app_name):
+    def getAllContainersInfo(self, environment_namespace):
         all_running_containers = subprocess.check_output(['docker', 'ps'])
-        containers_namespace = app_name +'_'
+        containers_namespace = environment_namespace +'_'
         for item in all_running_containers.splitlines():
             if containers_namespace in item:
                 self.getContainerInfoByID(item[:12])
 
-    def getContainerInfoByName(self, app_name, container_name):
-        container_id = Helpers.getContainerID(app_name, container_name)
+    def getContainerInfoByName(self, environment_namespace, container_name):
+        container_id = Helpers.getContainerID(environment_namespace, container_name)
         self.printContainerInfo(container_id)
 
     def getContainerInfoByID(self, container_id):

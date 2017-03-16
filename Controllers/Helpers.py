@@ -5,8 +5,8 @@ import subprocess
 class Helpers:
     @classmethod
 
-    def getContainerID(self, app_name, container_name):
-        container_full_name = app_name + '_' + container_name
+    def getContainerID(self, environment_namespace, container_name):
+        container_full_name = environment_namespace + '_' + container_name
         container_details = subprocess.check_output(['docker', 'ps'])
         container_id = ""
         for item in container_details.splitlines():

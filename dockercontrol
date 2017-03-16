@@ -9,14 +9,15 @@ from Commands.Ssh import *
 from Commands.Status import *
 from Commands.Help import *
 from Commands.Info import *
+from Commands.Application import *
 
 # Creates the Configuration object.
 Configuration = Configuration()
 
 current_path = Configuration.currentPath()
-app_name = Configuration.appName()
+environment_namespace = Configuration.environmentNamespace()
 
-if len (sys.argv) > 1:
+if len(sys.argv) > 1:
     # Change dir to path where command is run
     os.chdir(current_path)
 
@@ -29,17 +30,24 @@ if len (sys.argv) > 1:
     elif sys.argv[1] == 'rebuild':
         Rebuild.run()
     elif sys.argv[1] == 'ssh':
-        Ssh.run(app_name)
+        Ssh.run(environment_namespace)
     elif sys.argv[1] == 'status':
-        Status.run(app_name)
+        Status.run(environment_namespace)
     elif sys.argv[1] == 'info':
         if len(sys.argv) > 2:
-            Info().getSingleContainerInfo(app_name, sys.argv[2])
+            Info().getSingleContainerInfo(environment_namespace, sys.argv[2])
         else:
-            Info().getAllContainersInfo(app_name)
+            Info().getAllContainersInfo(environment_namespace)
     elif sys.argv[1] == 'help':
         Help.run()
     else:
-        print 'There is no command like that!'
+        if len(sys.argv) > 2:
+            applications = Application().getApplications()
+            application_name = sys.argv[1]
+            if application_name in applications:
+                arguments = sys.argv
+                Application().runApplication(application_name, arguments)
+        else:
+            print 'There is no command like that!'
 else:
     Help.run()
