@@ -28,7 +28,7 @@ if len(sys.argv) > 1:
     elif sys.argv[1] == 'provision':
         Provision.run()
     elif sys.argv[1] == 'rebuild':
-        Rebuild.run()
+        Rebuild.run(current_path, environment_namespace)
     elif sys.argv[1] == 'ssh':
         Ssh.run(environment_namespace)
     elif sys.argv[1] == 'status':
@@ -41,12 +41,11 @@ if len(sys.argv) > 1:
     elif sys.argv[1] == 'help':
         Help.run()
     else:
-        if len(sys.argv) > 2:
-            applications = Application().getApplications()
-            application_name = sys.argv[1]
-            if application_name in applications:
-                arguments = sys.argv
-                Application().runApplication(application_name, arguments)
+        applications = Application().getApplications()
+        application_name = sys.argv[1]
+        if application_name in applications:
+            arguments = sys.argv
+            Application().runApplication(application_name, arguments)
         else:
             print 'There is no command like that!'
 else:

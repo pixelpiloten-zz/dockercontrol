@@ -27,9 +27,10 @@ class Application:
             # application_name, which we dont need.
             input_arguments.pop(0)
             input_arguments.pop(0)
-            input_arguments.pop(0)
 
-            base_command = ['docker', 'exec', container_id, command_running_path, application['path']]
-            app_config_arguments = application['arguments']
-            command = base_command + app_config_arguments  + input_arguments
+            app_config_arguments = ''.join(application['arguments'])
+            input_arguments = ' '.join(input_arguments)
+            running_path_command = 'cd '+ application['running_path'] +'; '+ application['path'] +' '+ app_config_arguments +' '+ input_arguments
+            command = ['docker', 'exec', '-it', container_id, 'bash', '-c', running_path_command]
+
             subprocess.call(command)
