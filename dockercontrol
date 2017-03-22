@@ -22,9 +22,9 @@ if len(sys.argv) > 1:
     os.chdir(current_path)
 
     if sys.argv[1] == 'up':
-        Up.run()
+        Up.run(environment_namespace)
     elif sys.argv[1] == 'down':
-        Down.run()
+        Down.run(environment_namespace)
     elif sys.argv[1] == 'provision':
         Provision.run()
     elif sys.argv[1] == 'rebuild':

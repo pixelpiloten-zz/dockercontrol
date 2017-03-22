@@ -19,3 +19,14 @@ class Helpers:
         color_green = '\033[92m'
         color_gray = '\033[37m'
         return color_green + label +': '+ color_gray + color_gray + text
+
+    def getAllRunninngContainers(self):
+        return subprocess.check_output(['docker', 'ps'])
+
+    def getAllRunningContainersInNamespace(self, environment_namespace):
+        all_running_containers = self.getAllRunninngContainers()
+        all_running_containers_in_namespace = []
+        for container_row in all_running_containers.splitlines():
+            if environment_namespace in container_row:
+                all_running_containers_in_namespace.append(container_row)
+        return all_running_containers_in_namespace
