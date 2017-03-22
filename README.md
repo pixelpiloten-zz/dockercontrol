@@ -1,3 +1,11 @@
+# Dependencies
+* docker
+* docker-compose
+* Python modules:
+    * pyyaml
+    * simplejson
+    * python_hosts
+
 # Install instructions
 1. Copy the dockercontrol-folder to `/usr/local/bin/dockercontrol`.
 2. Add `/usr/local/bin/dockercontrol` to your `$PATH`.

@@ -16,9 +16,10 @@ class DomainHandler:
             container_name = self.getContainerName(container_info)
             network_name = self.getEnvironmentNetworkName(environment_namespace)
             container_ip = self.getContainerIpAddress(container_info, network_name)
-            container_hostname = self.resolveContainerDomainName(environment_namespace, container_name)
-            etc_hosts_entry = HostsEntry(entry_type='ipv4', address=container_ip, names=[container_hostname])
-            etc_hosts.add([etc_hosts_entry])
+            if container_ip:
+                container_hostname = self.resolveContainerDomainName(environment_namespace, container_name)
+                etc_hosts_entry = HostsEntry(entry_type='ipv4', address=container_ip, names=[container_hostname])
+                etc_hosts.add([etc_hosts_entry])
         if etc_hosts.count() > 0:
             etc_hosts.write()
             print 'Adding hostname(s) to /etc/hosts.'
@@ -46,7 +47,11 @@ class DomainHandler:
         return environment_namespace +'_default'
 
     def getContainerIpAddress(self, container_info, network_name):
-        return container_info['NetworkSettings']['Networks'][network_name]['IPAddress']
+        if network_name in container_info['NetworkSettings']['Networks']:
+            container_ip = container_info['NetworkSettings']['Networks'][network_name]['IPAddress']
+        else:
+            container_ip = None
+        return
 
     def resolveContainerDomainName(self, environment_namespace, container_name):
         container_name_split = container_name.split('_')
