@@ -22,7 +22,7 @@ Provisions the containers.
 
 > dockercontrol rebuild
 
-Stops the containers, gets the latest images from registry and rebuilds the containers.
+Stops the containers, gets the latest images from registry  and rebuilds the containers.
 
 > dockercontrol ssh containername
 
@@ -35,3 +35,9 @@ Gets the process output of the docker containers, if in the same folder as docke
 > dockercontrol info
 
 Gets a short summary about the runing containers in the docker-composer-file, if name of container is provided as a second argument info about only that running container is printed.
+
+## Special commands
+
+> dockercontrol application
+
+This is a application-command that runs any application inside a container, declare what containers should expose what applications inside the dockercontrol.yml (see example.dockercontrol.yml as base). Replace application with whatever program you want + options and attributes.  

@@ -1,0 +1,13 @@
+commands:
+  drush:
+    description: 'Runs drush inside the apache-container.'
+    container: apache
+    path: /usr/local/bin/drush
+    running_path: /app/web
+    arguments:
+      - '--uri=http://www.basedock.dev'
+  dropcat:
+    description: 'Runs dropcat inside the apache-container.'
+    container: apache
+    path: /usr/local/bin/dropcat
+    running_path: /app
