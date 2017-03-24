@@ -51,7 +51,7 @@ class DomainHandler:
             container_ip = container_info['NetworkSettings']['Networks'][network_name]['IPAddress']
         else:
             container_ip = None
-        return
+        return container_ip
 
     def resolveContainerDomainName(self, environment_namespace, container_name):
         container_name_split = container_name.split('_')
