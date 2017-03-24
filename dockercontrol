@@ -10,6 +10,7 @@ from Commands.Status import *
 from Commands.Help import *
 from Commands.Info import *
 from Commands.Application import *
+from Commands.Restart import *
 
 # Creates the Configuration object.
 Configuration = Configuration()
@@ -38,6 +39,8 @@ if len(sys.argv) > 1:
             Info().getSingleContainerInfo(environment_namespace, sys.argv[2])
         else:
             Info().getAllContainersInfo(environment_namespace)
+    elif sys.argv[1] == 'restart':
+        Restart().run(environment_namespace)
     elif sys.argv[1] == 'help':
         Help.run()
     else:
