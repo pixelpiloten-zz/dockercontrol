@@ -10,6 +10,6 @@ class Ssh:
     def run(self, environment_namespace):
         if sys.argv[2]:
             container_id = Helpers.getContainerID(environment_namespace, sys.argv[2])
-            subprocess.call(['docker', 'exec', '-i', '-t', container_id, '/bin/bash'])
+            subprocess.call(['docker', 'exec', '-i', '-t', container_id, 'sh'])
         else:
             print 'You must provide a container-name.'

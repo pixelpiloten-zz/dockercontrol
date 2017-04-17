@@ -3,6 +3,7 @@
 from Controllers.Helpers import *
 import json
 import subprocess
+from Controllers.DomainHandler import *
 
 class Info:
     @classmethod
@@ -19,12 +20,12 @@ class Info:
 
     def getContainerInfoByName(self, environment_namespace, container_name):
         container_id = Helpers.getContainerID(environment_namespace, container_name)
-        self.printContainerInfo(container_id)
+        self.printContainerInfo(environment_namespace, container_id)
 
     def getContainerInfoByID(self, container_id):
         self.printContainerInfo(container_id)
 
-    def printContainerInfo(self, container_id):
+    def printContainerInfo(self, environment_namespace, container_id):
         container_info_json = subprocess.check_output(['docker', 'inspect', container_id])
         container_info = json.loads(container_info_json)[0]
         print ''
@@ -35,11 +36,13 @@ class Info:
         print Helpers().colorizeOutput('Ports', '')
         for key, value in container_info['HostConfig']['PortBindings'].items():
             print ' - '+ key
-        print Helpers().colorizeOutput('Hostname(s)', '')
-        if container_info['HostConfig']['ExtraHosts'] is not None:
-            for hostname in container_info['HostConfig']['ExtraHosts']:
-                print ' - '+ hostname
+        print Helpers().colorizeOutput('IP', self.getContainerIp(container_info, environment_namespace))
+        print Helpers().colorizeOutput('Hostname', '-')
         print Helpers().colorizeOutput('Mount(s)', '')
         for mount in container_info['Mounts']:
             print ' - '+ mount['Source'] +' -> '+ mount['Destination']
         print ''
+
+    def getContainerIp(self, container_info, environment_namespace):
+        network_name = DomainHandler().getEnvironmentNetworkName(environment_namespace)
+        return DomainHandler().getContainerIpAddress(container_info, network_name)
