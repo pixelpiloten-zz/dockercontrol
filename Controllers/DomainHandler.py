@@ -55,5 +55,5 @@ class DomainHandler:
 
     def resolveContainerDomainName(self, environment_namespace, container_name):
         container_name_split = container_name.split('_')
-        container_base_name = container_name_split[0]
+        container_base_name = container_name_split[1]
         return container_base_name +'.'+ environment_namespace +'.docker'

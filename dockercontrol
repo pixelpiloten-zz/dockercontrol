@@ -11,6 +11,8 @@ from Commands.Help import *
 from Commands.Info import *
 from Commands.Application import *
 from Commands.Restart import *
+from Commands.Create import *
+from Commands.Build import *
 
 # Creates the Configuration object.
 Configuration = Configuration()
@@ -30,6 +32,8 @@ if len(sys.argv) > 1:
         Provision.run()
     elif sys.argv[1] == 'rebuild':
         Rebuild.run(current_path, environment_namespace)
+    elif sys.argv[1] == 'build':
+        Rebuild.run(current_path, environment_namespace)
     elif sys.argv[1] == 'ssh':
         Ssh.run(environment_namespace)
     elif sys.argv[1] == 'status':
@@ -41,6 +45,11 @@ if len(sys.argv) > 1:
             Info().getAllContainersInfo(environment_namespace)
     elif sys.argv[1] == 'restart':
         Restart().run(environment_namespace)
+    elif sys.argv[1] == 'create':
+        if len(sys.argv) > 2:
+            Create().run(sys.argv[2])
+        else:
+            print 'You need to provide a project name.'
     elif sys.argv[1] == 'help':
         Help.run()
     else:

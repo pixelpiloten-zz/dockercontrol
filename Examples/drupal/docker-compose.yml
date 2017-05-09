@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  apache:
+    container_name: apache_basedock
+    image: basedock_apache
+    ports:
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - "./application:/app"
+    environment:
+      - DRUPAL_DATABASE_NAME=drupal
+      - DRUPAL_DATABASE_USERNAME=root
+      - DRUPAL_DATABASE_PASSWORD=password
+      - DRUPAL_DATABASE_PORT=3306
+      - WEBSITE_HOST=basedock.dev
+  mariadb:
+    domainname: basedock.dev
+    container_name: mariadb_basedock
+    image: basedock_mariadb
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./.docker/mariadb/persistant_storage:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=drupal
+  memcached:
+    container_name: memcached_basedock
+    image: basedock_memcached
+    ports:
+      - "11211:11211"
+  varnish:
+    container_name: varnish_basedock
+    domainname: basedock.dev
+    image: basedock_varnish
+    depends_on:
+      - apache
+      - mariadb
+    ports:
+      - "80:80"
+    environment:
+      - VARNISH_CACHE_SIZE=128m
+  solr:
+    container_name: solr_basedock
+    domainname: basedock.dev
+    image: solr:6.3-alpine
+    ports:
+      - "8983:8983"
+    volumes:
+      - "./.docker/solr/persistant_storage:/opt/solr/server/solr/mycores"
+  phpmy:
+    container_name: phpmy_basedock
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - mariadb
+    links:
+      - mariadb:db
+    environment:
+      - PMA_HOST=mariadb
+      - MYSQL_ROOT_PASSWORD=password

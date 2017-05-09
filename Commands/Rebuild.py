@@ -10,7 +10,7 @@ class Rebuild:
         subprocess.call(['docker-compose', 'stop'])
         subprocess.call(['docker-compose', 'rm', '-f'])
 
-        local_docker_directory = current_path +'/.docker'
+        local_docker_directory = current_path +'/.docker/dockerfiles'
 
         if(os.path.exists(local_docker_directory)):
             dockerfile_source_folders = os.listdir(local_docker_directory)
